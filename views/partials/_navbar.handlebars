@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-warning">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="/">LOGO</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                {{!-- Se for usuário --}}
+                {{#if user}}
+
+                {{!-- Se for Admin --}}
+                {{#if (eq user.eAdmin 1)}}
+                 <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/admin">Dashboard</a>
+                </li>
+
+                {{!-- Se for Usuário Comum --}}
+                {{else}}
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+
+                {{/if}}
+                {{!-- Fim usuário Admin e Comum --}}
+                 <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/contato">Contato</a>
+                </li>
+
+                <div class="nav-item bg-danger me-3">
+                    <a class="nav-link text-light" href="/usuarios/logout">Sair</a>
+                </div>
+
+                {{!-- Se não for usuário --}}
+                {{else}}
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+
+                 <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/contato">Contato</a>
+                </li>
+
+                <div class="nav-item bg-light me-3">
+                    <a class="nav-link" href="/usuarios/login">Login</a>
+                </div>
+
+                <div class="nav-item bg-light">
+                    <a class="nav-link" href="/usuarios/registro">Cadastre-se</a>
+                </div>
+                {{/if}}
+                {{!-- Fim da verificação --}}
+            </ul>
+        </div>
+
+    </div>
+</nav>

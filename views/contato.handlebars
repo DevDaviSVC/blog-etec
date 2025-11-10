@@ -1,0 +1,18 @@
+<h2>Contato</h2>
+<hr>
+
+<div class="container col-lg-6 col-sm-12 mt-5">
+    <form method="POST" action="/contato/enviar">
+        <label for="nome">Nome:</label>
+        <input class="form-control mb-2" id="nome" name="nome" type="text" required>
+
+        <label for="email">Email:</label>
+        <input class="form-control mb-4" id="email" name="email" type="email" required>
+
+        <textarea name="texto" class="form-control mb-4" placeholder="Digite o seu comentário" required></textarea>
+
+        <div class="text-end">
+            <button type="submit" class="btn btn-success">Enviar</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,19 @@
+<h2>Lista de Comentários</h2>
+<hr>
+
+{{#each comentarios}}
+Nome: {{nome}}
+Email: {{email}}
+Texto: {{texto}}
+
+<a href="/admin/comentarios/edit/{{_id}}" class="btn btn-primary">
+    Editar
+</a>
+
+<form action="/admin/comentarios/delete/{{_id}}" method="POST">
+    <button type="submit" class="btn btn-danger" onclick="return confirm('Deseja excluir esse comentário?')">Deletar</button>
+</form>
+<hr>
+{{else}}
+
+{{/each}}
