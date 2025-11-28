@@ -90,7 +90,8 @@ app.use('/articles', require('./routes/article.js'));
 //Index
 app.get('/', async (req, res) => {
     const articles = await Article.find().lean().populate("author");
-    res.render('index', {articles});
+    const isUser = req.user ? true : false;
+    res.render('index', {articles, isUser});
 })
 
 //Conexão do Servidor --------------------------------

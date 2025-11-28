@@ -1,7 +1,9 @@
 <div class="row">
 
   <h2 class="col-10">Articles</h2>
-  <a class="col-2 btn btn-primary" href="/articles/create">Criar Artigo</a>
+  {{#if isUser}}
+    <a class="col-2 btn btn-primary" href="/articles/create">Criar Artigo</a>
+  {{/if}}
 </div>
 <hr />
 
