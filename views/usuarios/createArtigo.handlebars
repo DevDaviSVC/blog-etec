@@ -5,11 +5,11 @@
     <form method="POST" action="/articles/create">
         <label for="nome">Título:</label>
         <input class="form-control mb-2" id="title" name="title" type="text" required>
-
+        <label for="nome">Texto:</label>
         <textarea name="content" class="form-control mb-4" required>{{article.text}}</textarea>
 
         <div class="text-end">
-            <button type="submit" class="btn btn-success">Criar</button>
+            <button type="submit" class="btn text-dark btn-light">Criar</button>
         </div>
     </form>
 </div>

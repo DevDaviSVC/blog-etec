@@ -1,16 +1,156 @@
-<div class="row">
+<!-- Container principal -->
+    <div class="articles-container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1>Want to see what's new?</h1>
+            <p>Find anything about everything.</p>
+        </div>
 
-  <h2 class="col-10">Articles</h2>
-  <a class="col-2 btn btn-primary" href="/articles/create">Criar Artigo</a>
-</div>
-<hr />
+        <!-- Barra de pesquisa -->
+        <div class="search-container">
+            <input 
+                type="text" 
+                class="search-input" 
+                placeholder="Astronomics..." 
+                id="searchInput"
+            >
+            <button type="button" class="search-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </button>
+        </div>
 
-{{#each articles}}
+        <!-- Lista de artigos -->
+        {{#if articles}}
+            <div class="articles-list">
+                {{#each articles}}
+                    <a href="/articles/{{this._id}}" class="article-card">
+                        <div class="article-icon">
+                            📰
+                        </div>
+                        <div class="article-content">
+                            <div class="article-title">{{this.title}}</div>
+                            
+                        </div>
+                    </a>
+                {{/each}}
+            </div>
 
-  <hr />
-  <a href="/articles/{{_id}}"><h1>{{title}}</h1></a>
-  <p>{{text}}</p>
-  <p>Created by: {{author.nome}}</p>
-  <hr />
+            <!-- Paginação -->
+            <div class="pagination-container">
+                <button class="pagination-btn" id="prevBtn">
+                    ← Anterior
+                </button>
 
-{{/each}}
+                <div class="pagination-info">
+                    Página <span id="currentPage">1</span>
+                </div>
+
+                <button class="pagination-btn" id="nextBtn">
+                    Próxima →
+                </button>
+            </div>
+        {{else}}
+            <div class="no-results" style="display: none;">
+                <h3>Nenhum artigo encontrado</h3>
+                <p>Tente ajustar sua pesquisa ou explore outros tópicos.</p>
+            </div>
+        {{/if}}
+    </div>
+
+    <script>
+        const articlesPerPage = 5;
+        let currentPage = 1;
+        const allArticles = Array.from(document.querySelectorAll('.article-card'));
+        const totalPages = Math.ceil(allArticles.length / articlesPerPage);
+
+        function showPage(page) {
+            // Esconde todos os artigos
+            allArticles.forEach(article => article.style.display = 'none');
+            
+            // Mostra apenas os artigos da página atual
+            const start = (page - 1) * articlesPerPage;
+            const end = start + articlesPerPage;
+            allArticles.slice(start, end).forEach(article => article.style.display = 'flex');
+            
+            // Atualiza número da página
+            document.getElementById('currentPage').textContent = page;
+            
+            // Atualiza estado dos botões
+            document.getElementById('prevBtn').disabled = page === 1;
+            document.getElementById('nextBtn').disabled = page === totalPages || totalPages === 0;
+        }
+
+        // Event listeners
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        });
+
+        // Busca funcional
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            let visibleArticles = [];
+            
+            allArticles.forEach(article => {
+                const title = article.querySelector('.article-title').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    visibleArticles.push(article);
+                    article.style.display = 'flex';
+                } else {
+                    article.style.display = 'none';
+                }
+            });
+
+            // Atualiza paginação baseado nos resultados filtrados
+            if (searchTerm === '') {
+                currentPage = 1;
+                showPage(currentPage);
+            } else {
+                document.getElementById('currentPage').textContent = '-';
+                document.getElementById('prevBtn').disabled = true;
+                document.getElementById('nextBtn').disabled = true;
+            }
+
+            // Mostra/esconde mensagem de "não encontrado"
+            const noResults = document.querySelector('.no-results');
+            if (visibleArticles.length === 0 && searchTerm !== '') {
+                if (!noResults) {
+                    const msg = document.createElement('div');
+                    msg.className = 'no-results';
+                    msg.innerHTML = '<h3>Nenhum artigo encontrado</h3><p>Tente ajustar sua pesquisa ou explore outros tópicos.</p>';
+                    document.querySelector('.articles-list').style.display = 'none';
+                    document.querySelector('.articles-container').appendChild(msg);
+                }
+            } else {
+                if (noResults) noResults.remove();
+                document.querySelector('.articles-list').style.display = 'flex';
+            }
+        });
+
+        // Limpa a busca com ESC
+        document.getElementById('searchInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                this.value = '';
+                this.dispatchEvent(new Event('input'));
+            }
+        });
+
+        // Inicializa a primeira página
+        if (allArticles.length > 0) {
+            showPage(1);
+        }
+    </script>
+</body>
+</html>
