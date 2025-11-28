@@ -13,29 +13,9 @@
 
                 {{!-- Se for usuário --}}
                 {{#if user}}
-
-                {{!-- Se for Admin --}}
-                {{#if (eq user.eAdmin 1)}}
-                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/admin">Dashboard</a>
-                </li>
-
-                {{!-- Se for Usuário Comum --}}
-                {{else}}
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
-
-                {{/if}}
-                {{!-- Fim usuário Admin e Comum --}}
-                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/contato">Contato</a>
-                </li>
-
                 <div class="nav-item bg-danger me-3">
                     <a class="nav-link text-light" href="/usuarios/logout">Sair</a>
                 </div>
@@ -44,10 +24,6 @@
                 {{else}}
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
-                </li>
-
-                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/contato">Contato</a>
                 </li>
 
                 <div class="nav-item bg-light me-3">

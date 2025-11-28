@@ -1,12 +1,16 @@
-<h2>Articles</h2>
-<hr>
+<div class="row">
+
+  <h2 class="col-10">Articles</h2>
+  <a class="col-2 btn btn-primary" href="/articles/create">Criar Artigo</a>
+</div>
+<hr />
 
 {{#each articles}}
 
-<hr>
-<h1>{{title}}</h1>
-<p>{{text}}</p>
-<p>Created by: {{author.nome}}</p>
-<hr>
+  <hr />
+  <a href="/articles/{{_id}}"><h1>{{title}}</h1></a>
+  <p>{{text}}</p>
+  <p>Created by: {{author.nome}}</p>
+  <hr />
 
 {{/each}}

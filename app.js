@@ -6,9 +6,9 @@ const handlebars = require('express-handlebars')
 const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('passport')
+require('dotenv').config();
 
 //Chamando as Rotas externas
-const admin = require('./routes/admin')
 const usuarios = require('./routes/usuario')
 
 //Iniciando o Express
@@ -18,13 +18,9 @@ const app = express()
 const path = require('path')
 
 //MODELS
-require('./models/Comentario')
-const Comentario = mongoose.model('comentarios')
 const Article = require('./models/Article');
 
 //CONFIGURAÇÕES --------------------------
-
-const {eAdmin, eUser} = require("./helpers/conta.js");
 
 //bodyParser
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -46,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 mongoose.Promise = global.Promise
 mongoose
   .connect(
-    "mongodb+srv://etecmateriais_db_user:5ZcN0BKa8tyCHphX@blogetec.fmlfuym.mongodb.net/?appName=blogetec"
+    process.env.MONGO_URL
   )
   .then(() => {
     console.log("Conectado ao Mongo");
@@ -88,7 +84,6 @@ app.use((req, res, next) => {
 })
 
 //ROTAS -------------------------------------------------------
-app.use('/admin', eAdmin, admin);
 app.use('/usuarios', usuarios);
 app.use('/articles', require('./routes/article.js'));
 
@@ -97,30 +92,6 @@ app.get('/', async (req, res) => {
     const articles = await Article.find().lean().populate("author");
     res.render('index', {articles});
 })
-
-//Contato
-app.get('/contato', (req, res) => {
-    res.render('contato')
-})
-
-//Enviar Contato
-app.post('/contato/enviar', (req, res) => {
-
-    //Criando um novo comentário
-    const novoComentario = {
-        nome: req.body.nome,
-        email: req.body.email,
-        texto: req.body.texto
-    }
-    new Comentario(novoComentario).save().then(() => {
-        req.flash('success_msg', 'Contato enviado com sucesso!')
-        res.redirect('/contato')
-    }).catch((err) => {
-        req.flash('error_msg', 'Falha ao enviar o contato: ' + err)
-        res.redirect('/')
-    })
-})
-
 
 //Conexão do Servidor --------------------------------
 const PORT = 3000

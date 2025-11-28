@@ -1,0 +1,15 @@
+<h2>Editar artigo</h2>
+<hr>
+
+<div class="container col-lg-6 col-sm-12 mt-5">
+    <form method="POST" action="/articles/edit/{{article._id}}">
+        <label for="nome">Título:</label>
+        <input class="form-control mb-2" id="title" name="title" type="text" value="{{article.title}}" required>
+
+        <textarea name="text" class="form-control mb-4" placeholder="Digite o conteúdo do artigo" required>{{article.text}}</textarea>
+
+        <div class="text-end">
+            <button type="submit" class="btn btn-success">Criar</button>
+        </div>
+    </form>
+</div>

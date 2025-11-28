@@ -1,0 +1,33 @@
+<div>
+  <form
+    class="row space-between"
+    method="POST"
+    action="/articles/delete/{{article._id}}"
+  >
+    <div class="col-4">
+      {{#if isAuthor}}
+        <button
+          type="submit"
+          class="btn btn-danger"
+          onclick="return confirm('Deseja realmente excluir esse artigo?')"
+        >Delete</button>
+      {{/if}}
+    </div>
+    <div class="col-4 text-center">
+      {{#if isAuthor}}
+        <a
+          class="btn btn-success"
+          href="/articles/edit/{{article._id}}"
+        >Editar</a>
+      {{/if}}
+    </div>
+    <div class="col-4 text-end">
+
+      <a class="btn btn-primary col-2" href="/">Voltar</a>
+    </div>
+
+  </form>
+  <h1>{{article.title}}</h1>
+  <p>{{article.text}}</p>
+  <p>Created by: {{article.author.nome}}</p>
+</div>
